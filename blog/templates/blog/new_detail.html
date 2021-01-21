@@ -1,0 +1,33 @@
+{% extends 'main.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block main_section %}
+
+        <div class="alert alert-light">
+            <h1>{{ post.title }}</h1>
+            <p>{{ post.text }}</p>
+
+            <div class="row">
+                <div>
+                    {% if post.author.profile.img %}
+                        <img src="{{ post.author.profile.img.url }}" alt="" class="user_img">
+                    {% else %}
+                        <img src="/media/default.jpg" alt="">
+                    {% endif %}
+                </div>
+                <div class="mt-2">
+                    <span class="text-muted"><b>Дата: </b> {{ post.date|date:"j F Y, время: H:i:s" }} </span>
+                        <p><b>Автор: </b><a href="{% url 'blog:user-news' post.author %}">{{ post.author }}</a></p>
+                </div>
+            </div>
+            {% if object.author == user %}
+                <hr>
+                <a href="{% url 'blog:update' object.id %}" class="btn btn-outline-warning">Обновить</a>
+                <a href="{% url 'blog:delete' object.id %}" class="btn btn-outline-danger">Удалить</a>
+            {% endif %}
+        </div>
+
+{% endblock main_section %}

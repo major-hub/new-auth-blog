@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'blog/main.css' %}">
+    <title>
+    {% block title %}
+        Home
+    {% endblock title %}
+        </title>
+</head>
+<body>
+    {% include 'inc/blog/navbar.html' %}
+
+    <main class="container">
+        <div class="row">
+            <div class="col-md-8">
+                
+                {% if messages %}
+                    {% for m in messages %}
+                        <div class="alert alert-{{ m.tags }}">
+                            {{ m }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                    
+                {% block main_section %}
+            
+                {% endblock main_section %}
+            </div>
+
+            <aside class="col-md-4">
+                <div class="p-3">
+                    <h3><b>10 ta film dasturchilar uchun</b></h3>
+                    <img class="img-thumbnail mb-1" 
+                    src="https://cdn.pixabay.com/photo/2016/10/20/18/35/sunrise-1756274__340.jpg" alt="">
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti reprehen derit officia
+                        eveniet. Odio cupiditate sint, vero optio autem ut velit, ullam suscipit voluptates facere quia accusantium dolorem totam, quasi quisquam quibusdam eum sed excepturi! Suscipit neque recusandae quaerat ea cupiditate! Debitis doloremque cupiditate culpa, cum possimus deserunt voluptate. 
+                        Unde quia sint alias iusto blanditiis veniam deserunt consequatur mollitia quis saepe?</p>                    
+                    <a href="http://itproger/news/1" target="_blank">
+                        <button class="btn btn-warning">Ko'rish</button>
+                    </a>
+                </div>
+
+                <div class="p-3 mb-3">
+                    <img class="img-thumbnail mb-2"  
+                    src="https://cdn.pixabay.com/photo/2017/05/11/11/15/workplace-2303851__340.jpg" alt="">
+                    <button class="btn btn-warning">O'qishni boshlash</button>
+                </div>
+            </aside>
+        </div>            
+    </main>
+    
+</body>
+</html>

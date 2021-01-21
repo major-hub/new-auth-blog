@@ -1,0 +1,53 @@
+{% extends 'main.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block main_section %}
+
+    <h2>User: {{ view.kwargs.username }}</h2>
+    <h3>Количество статы: {{ page_obj.paginator.count }}</h3>
+    {% for post in news %}
+        <div class="alert alert-light">
+            <h1>{{ post.title }}</h1>
+            <p>{{ post.text|truncatewords:"20" }}</p>
+
+            <div class="row">
+                <div>
+                    {% if post.author.profile.img %}
+                        <img src="{{ post.author.profile.img.url }}" alt="" class="user_img">
+                    {% else %}
+                        <img src="/media/default.jpg" alt="">
+                    {% endif %}
+                </div>
+                <div class="mt-2">
+                    <span class="text-muted"><b>Дата: </b> {{ post.date|date:"j F Y, время: H:i:s" }} </span>
+                        <p><b>Автор: </b><a href="{% url 'blog:user-news' post.author %}">{{ post.author }}</a></p>
+                </div>
+            </div>
+            <a href="{% url 'blog:detail' post.id %}" class="btn btn-outline-warning">Читать далее</a>
+        </div>
+    {% endfor %}
+
+    {% if is_paginated %}
+        <div class="pagination mt-4 mb-4">
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-warning" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            {% for p in page_obj.paginator.page_range %}
+                {% if p == page_obj.number %}
+                    <button class="btn btn-warning">{{ p }}</button>
+                {% elif p > page_obj.number|add:"-3" and p < page_obj.number|add:"3" %}
+                    <a class="btn btn-outline-warning" href="?page={{ p }}">{{ p }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a class="btn btn-outline-warning" href="?page={{ page_obj.next_page_number }}">Next</a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+{% endblock main_section %}
